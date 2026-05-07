@@ -1,25 +1,39 @@
 package com.person.repit.websocket;
 
+import com.person.repit.dto.MessageDto;
+import com.person.repit.type.MessageType;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import tools.jackson.databind.ObjectMapper;
 
 
 public class InterviewWebsocketHandler extends TextWebSocketHandler {
 
-    // 연결 시 실행
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) {
-        System.out.println("연결됨: " + session.getId());
-    }
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // 메시지 받을 시 실행
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
+
         String payload = message.getPayload();
-        System.out.println("받은 메세지: " + payload);
-        session.sendMessage(new TextMessage("hello back"));
+
+        // JSON -> DTO 로 변환
+        MessageDto messageDto = objectMapper.readValue(payload, MessageDto.class);
+
+        System.out.println("타입: " + messageDto.getType());
+        System.out.println("내용: " + messageDto.getContent());
+
+        if (messageDto.getType() == MessageType.START) {
+            MessageDto response = new MessageDto();
+            response.setType(MessageType.QUESTION);
+            response.setContent("자기소개 해주세요.");
+
+            // DTO -> JSON 변환
+            String responseJson = objectMapper.writeValueAsString(response);
+
+            session.sendMessage(new TextMessage(responseJson));
+        }
     }
 
     // 연결 해제 시 실행 X
