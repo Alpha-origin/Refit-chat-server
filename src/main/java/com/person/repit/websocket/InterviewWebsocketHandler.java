@@ -5,7 +5,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.io.IOException;
 
 public class InterviewWebsocketHandler extends TextWebSocketHandler {
 
@@ -16,18 +15,15 @@ public class InterviewWebsocketHandler extends TextWebSocketHandler {
     }
 
     // 메시지 받을 시 실행
-    public void handlerTextMessage(WebSocketSession session, TextMessage message) {
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
         String payload = message.getPayload();
         System.out.println("받은 메세지: " + payload);
-
-        try {
-            session.sendMessage(new TextMessage("hello back"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        session.sendMessage(new TextMessage("hello back"));
     }
 
     // 연결 해제 시 실행 X
+    @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         System.out.println("연결 종료: " + session.getId());
     }
