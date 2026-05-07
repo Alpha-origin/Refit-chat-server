@@ -29,6 +29,8 @@ dependencies {
 
     runtimeOnly 'com.mysql:mysql-connector-j'
 
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
 }
 
 tasks.named('test') {
