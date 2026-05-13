@@ -1,16 +1,38 @@
 package com.person.repit.entity;
 
 import com.person.repit.type.Status;
-import jakarta.persistence.Entity;
-import lombok.Getter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@Table(name = "interview")
 public class Interview {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "interview_id", nullable = false)
     private Long interviewId;
+
+    @Column(name = "user_id", nullable = false)
     private Long userId;
+
+    @Column(name = "persona_id", nullable = false)
     private Long personaId;
+
+    @Column(name = "session_id")
     private Long sessionId;
-    private Status status;
-    private Long createdAt
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    @Builder.Default
+    private Status status = Status.IN_PROGRESS;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false)
+    private Long createdAt;
 }
