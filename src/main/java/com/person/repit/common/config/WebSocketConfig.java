@@ -1,6 +1,6 @@
 package com.person.repit.common.config;
 
-import com.person.repit.websocket.InterviewWebsocketHandler;
+import com.person.repit.interview.websocket.InterviewWebsocketHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;

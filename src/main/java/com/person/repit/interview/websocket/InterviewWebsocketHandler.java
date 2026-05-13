@@ -1,4 +1,4 @@
-package com.person.repit.websocket;
+package com.person.repit.interview.websocket;
 
 import com.person.repit.interview.dto.request.MessageRequest;
 import com.person.repit.common.type.MessageType;

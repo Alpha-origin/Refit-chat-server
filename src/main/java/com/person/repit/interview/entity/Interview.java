@@ -1,5 +1,6 @@
 package com.person.repit.interview.entity;
 
+import com.person.repit.interview.type.InterviewStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,7 +30,7 @@ public class Interview {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     @Builder.Default
-    private Status status = Status.IN_PROGRESS;
+    private InterviewStatus status = InterviewStatus.IN_PROGRESS;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)

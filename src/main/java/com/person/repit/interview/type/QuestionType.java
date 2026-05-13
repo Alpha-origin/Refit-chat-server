@@ -1,4 +1,4 @@
-package com.person.repit.interview.entity;
+package com.person.repit.interview.type;
 
 public enum QuestionType {
     ORIGINAL,
