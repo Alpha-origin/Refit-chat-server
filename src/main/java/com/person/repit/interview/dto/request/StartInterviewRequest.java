@@ -8,7 +8,5 @@ import lombok.Setter;
 @Setter
 public class StartInterviewRequest {
     @NotNull
-    private Long interviewId;
-    @NotNull
     private Long personaId;
 }

@@ -12,6 +12,5 @@ public class MessageRequest {
     @NotNull
     private MessageType type;
 
-    @NotBlank
-    private String content;
+    private Object data;
 }
