@@ -1,6 +1,6 @@
 package com.person.repit.websocket;
 
-import com.person.repit.dto.MessageDto;
+import com.person.repit.dto.request.MessageRequest;
 import com.person.repit.type.MessageType;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -19,13 +19,13 @@ public class InterviewWebsocketHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
 
         // JSON -> DTO 로 변환
-        MessageDto messageDto = objectMapper.readValue(payload, MessageDto.class);
+        MessageRequest messageDto = objectMapper.readValue(payload, MessageRequest.class);
 
         System.out.println("타입: " + messageDto.getType());
         System.out.println("내용: " + messageDto.getContent());
 
         if (messageDto.getType() == MessageType.START) {
-            MessageDto response = new MessageDto();
+            MessageRequest response = new MessageRequest();
             response.setType(MessageType.QUESTION);
             response.setContent("자기소개 해주세요.");
 
