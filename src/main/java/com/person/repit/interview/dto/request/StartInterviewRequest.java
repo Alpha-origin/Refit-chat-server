@@ -1,4 +1,4 @@
-package com.person.repit.dto.request;
+package com.person.repit.interview.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

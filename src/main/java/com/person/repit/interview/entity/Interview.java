@@ -1,6 +1,5 @@
-package com.person.repit.entity;
+package com.person.repit.interview.entity;
 
-import com.person.repit.type.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

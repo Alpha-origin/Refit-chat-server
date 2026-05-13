@@ -1,7 +1,7 @@
 package com.person.repit.websocket;
 
-import com.person.repit.dto.request.MessageRequest;
-import com.person.repit.type.MessageType;
+import com.person.repit.interview.dto.request.MessageRequest;
+import com.person.repit.common.type.MessageType;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

@@ -1,6 +1,6 @@
-package com.person.repit.dto.request;
+package com.person.repit.interview.dto.request;
 
-import com.person.repit.type.MessageType;
+import com.person.repit.common.type.MessageType;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
