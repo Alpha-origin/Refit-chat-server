@@ -2,6 +2,14 @@ package com.person.repit.interview.websocket;
 
 import com.person.repit.interview.dto.request.MessageRequest;
 import com.person.repit.common.type.MessageType;
+import com.person.repit.interview.dto.request.StartInterviewRequest;
+import com.person.repit.interview.dto.response.MessageResponse;
+import com.person.repit.interview.dto.response.QuestionResponse;
+import com.person.repit.interview.service.InterviewService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -9,36 +17,29 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import tools.jackson.databind.ObjectMapper;
 
 
+@Slf4j
+@Component
+@RequiredArgsConstructor
 public class InterviewWebsocketHandler extends TextWebSocketHandler {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
+    private final InterviewService interviewService;
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
-        String payload = message.getPayload();
+        MessageRequest request = objectMapper.readValue(message.getPayload(), MessageRequest.class);
 
-        // JSON -> DTO 로 변환
-        MessageRequest messageDto = objectMapper.readValue(payload, MessageRequest.class);
-
-        System.out.println("타입: " + messageDto.getType());
-        System.out.println("내용: " + messageDto.getContent());
-
-        if (messageDto.getType() == MessageType.START) {
-            MessageRequest response = new MessageRequest();
-            response.setType(MessageType.QUESTION);
-            response.setContent("자기소개 해주세요.");
-
-            // DTO -> JSON 변환
-            String responseJson = objectMapper.writeValueAsString(response);
-
-            session.sendMessage(new TextMessage(responseJson));
+        if (request.getType() == MessageType.START) {
+            String json = objectMapper.writeValueAsString(request.getData());
+            StartInterviewRequest startRequest = objectMapper.readValue(json, StartInterviewRequest.class);
+            QuestionResponse questionResponse = interviewService.startInterview(startRequest);
+            MessageResponse response = MessageResponse
+                    .builder()
+                    .type(MessageType.QUESTION)
+                    .data(questionResponse)
+                    .build();
+            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(response)));
         }
-    }
-
-    // 연결 해제 시 실행 X
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        System.out.println("연결 종료: " + session.getId());
     }
 }

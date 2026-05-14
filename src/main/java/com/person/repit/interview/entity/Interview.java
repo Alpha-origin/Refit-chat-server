@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Builder
 @Table(name = "interview")
 public class Interview {
