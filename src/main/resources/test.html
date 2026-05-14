@@ -34,7 +34,9 @@
             console.log("메시지 전송");
             socket.send(JSON.stringify({
                 type: "START",
-                content: "면접 시작"
+                data: {
+                    personaId: 1
+                }
             }));
         }
 

@@ -1,4 +1,4 @@
-package com.person.repit.type;
+package com.person.repit.common.type;
 
 public enum MessageType {
     START,
